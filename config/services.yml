@@ -1,0 +1,36 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Magento\:
+        resource: '../src/Magento/*'
+
+    order.entity:
+        class: Magento\OrderBundle\Entity\Order
+        public: false
+
+    order.validator:
+        class: Magento\OrderBundle\Model\Validator
+        public: false
+
+    mailer:
+        class: Magento\OrderBundle\Model\Mailer
+        public: false
+
+    order_notification:
+        class: Magento\OrderBundle\Command\OrderNotificationCommand
+        arguments:
+            $mailer: '@mailer'
+            $queue: '@queue'
+
+    magento_order:
+        class: Magento\OrderBundle\Controller\Api\V1\OrderController
+        arguments:
+            $order: '@order.entity'
+            $validator: '@order.validator'
+            $queue: '@queue'
+
+
+

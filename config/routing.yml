@@ -1,0 +1,4 @@
+magento_order:
+    resource: "@MagentoOrderBundle/Controller/"
+    type:     rest
+    prefix:   /api/v1/

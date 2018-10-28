@@ -1,0 +1,73 @@
+imports:
+- { resource: parameters.yml }
+- { resource: services.yml }
+
+framework:
+  secret:          "%kernel.secret%"
+  router:
+    resource: "%kernel.root_dir%/config/routing.yml"
+    strict_requirements: ~
+
+swiftmailer:
+  delivery_addresses: ['someemail@example.com']
+
+fos_rest:
+  format_listener:
+    rules:
+    - { path: ^/, priorities: [ json ], fallback_format: 'json', prefer_extension: true }
+    - { path: ^/api/v1/orders, priorities: [ json ], fallback_format: 'json', prefer_extension: true }
+  allowed_methods_listener: true
+  body_listener:
+    decoders:
+      json: fos_rest.decoder.json
+  param_fetcher_listener: true
+  exception:
+    enabled: true
+
+doctrine:
+  dbal:
+    driver:   pdo_mysql
+    host:     '%database_host%'
+    dbname:   '%database_name%'
+    user:     '%database_user%'
+    password: '%database_password%'
+  orm:
+    auto_generate_proxy_classes: "%kernel.debug%"
+    naming_strategy: doctrine.orm.naming_strategy.underscore
+    auto_mapping: true
+    mappings:
+      MagentoOrderBundle: ~
+
+monolog:
+  handlers:
+    # this "file_log" key could be anything
+    file_log:
+      type: stream
+      # log to var/log/(environment).log
+      path: "%kernel.logs_dir%/%kernel.environment%.log"
+      # log *all* messages (debug is lowest level)
+      level: debug
+
+    syslog_handler:
+      type: syslog
+      # log error-level messages and higher
+      level: error
+
+sb_queue:
+  service:
+    alias: 'queue' # alias for service `sb_queue` (e.g. $this->get('queue'))
+    class: 'SymfonyBundles\QueueBundle\Service\Queue'
+    storage: 'redis' # storage key from `queue.storages` section
+  settings:
+    queue_default_name: 'queue:default' # default name for queue
+  storages:
+    redis:
+      class: 'SymfonyBundles\QueueBundle\Service\Storage\RedisStorage'
+      client: 'sb_redis.client.default' # storage client service id
+
+sb_redis:
+  clients:
+    default:
+      $options:    []
+      $parameters: ['tcp://127.0.0.1:6379']
+

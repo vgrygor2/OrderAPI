@@ -1,0 +1,28 @@
+{
+    "autoload": {
+        "psr-4": { "": "src/" },
+        "classmap": [ "src/Kernel.php"]
+    },
+    "require": {
+        "friendsofsymfony/rest-bundle": "^2.4",
+        "symfony/http-foundation": "^3.4",
+        "phpunit/phpunit": "^6.5",
+        "symfony/console": "^3.4",
+        "symfony/dotenv": "^3.4",
+        "symfony/yaml": "^3.4",
+        "jms/serializer-bundle": "^2.4",
+        "doctrine/doctrine-bundle": "^1.9",
+        "doctrine/common": "^2.7",
+        "doctrine/dbal": "^2.5",
+        "symfony/orm-pack": "^1.0",
+        "symfony/options-resolver": "^3.4",
+        "symfony/dependency-injection": "^3.4",
+        "symfony/swiftmailer-bundle": "^3.2",
+        "symfony/monolog-bundle": "^3.3",
+        "symfony-bundles/queue-bundle": "^2.0",
+        "symfony-bundles/redis-bundle": "^1.0"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^4.1"
+    }
+}
