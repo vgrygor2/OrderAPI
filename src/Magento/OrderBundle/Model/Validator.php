@@ -46,7 +46,7 @@ class Validator
         if ($errors) {
             return $errors;
         }
-        $items = $data['lines'];
+        $items = isset($data['lines']) ? $data['lines'] : null;
         if (!$items || !isset($items[0]['line_number'])) {
             return ['message' => 'Empty order items data.', 'code' => Response::HTTP_BAD_REQUEST];
         }
